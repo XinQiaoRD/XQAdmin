@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8" />
+    <title>网站后台管理</title>
+
+    <meta name="keywords" content="mv3c" />
+    <meta name="description" content="mv3c" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<!-- basic styles -->
+
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.4.1.css" />
+<!-- page specific plugin styles -->
+
+<!-- ace styles -->
+
+<link rel="stylesheet" href="../assets/css/ace.min.css" />
+<link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+<script type="text/javascript" src="../../lib/jq/jquery-1.10.2.min.js" ></script>
+<script src="../assets/js/ace-extra.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+<!-- page specific plugin scripts -->
+<script src="../assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="../assets/js/bootbox.min.js"></script>
+<script src="../assets/js/jquery.easy-pie-chart.min.js"></script>
+<script src="../assets/js/jquery.gritter.min.js"></script>
+<script src="../assets/js/spin.min.js"></script>
+
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+
+<script type="text/javascript">
+    $(function($) {
+        $('[data-rel=tooltip]').tooltip();
+    })
+</script>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="#" class="navbar-brand">
+                    <small>
+                        <i class="icon-cogs"></i>
+                        MV3C网站管理后台
+                    </small>
+                </a><!-- /.brand -->
+            </div><!-- /.navbar-header -->
+        </div><!-- /.container -->
+    </div>
+
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+        </script>
+
+        <div class="main-container-inner">
+
+
+            <div class="sidebar" id="sidebar">
+
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+            </div>
+
+            <div class="main-content">
+            
+                <div class="page-content">
+                
+<!--cc-->
+<div class="row"><div class="col-xs-12"><div class="tabbable">
+
+    <ul class="nav nav-tabs" id="myTab">
+        <li><a href="{$D}/{$C}/{$M}/{$A}_m"><i class="green fa fa-list bigger-110"></i> 管理员浏览</a></li>
+        <li><a href="{$D}/{$C}/{$M}/{$A}_add"><i class="green fa fa-floppy-o bigger-110"></i> 增加管理员</a></li>
+        <li class="active"><a href="javascript:void();"><i class="green fa fa-floppy-o bigger-110"></i> 修改密码</a></li>
+    </ul>
+	<div class="hr hr-dotted"></div>
+    
+    
+    <form method="post" class="form-horizontal" role="form" action="{$D}/{$C}/{$M}/{$A}_psw_op?id={$id}">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 原密码 </label>
+
+            <div class="col-sm-9">
+                <input name="password_old" type="password" id="form-field-2" placeholder="原密码" class="col-xs-10 col-sm-6" />
+            </div>
+        </div>
+        
+        <hr />
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 新密码 </label>
+
+            <div class="col-sm-9">
+                <input name="password" type="password" id="form-field-2" placeholder="新密码" class="col-xs-10 col-sm-6" />
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 密码确认 </label>
+
+            <div class="col-sm-9">
+                <input name="password1" type="password" id="form-field-2" placeholder="密码确认" class="col-xs-10 col-sm-6" />
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i> 提 交</button>
+                &nbsp; &nbsp; &nbsp;
+                <button class="btn" type="reset"><i class="icon-undo bigger-110"></i> 重 置</button>
+            </div>
+        </div>
+
+        
+    </form>
+	
+    
+</div></div></div>
+<!--cc-->     
+
+            	</div>
+            </div><!-- /.main-content -->
+
+        </div><!-- /.main-container-inner -->
+    </div><!-- /.main-container -->
+
+</body>
+</html>

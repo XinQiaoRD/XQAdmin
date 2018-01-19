@@ -1,0 +1,21 @@
+table{
+    text-align: center;
+    border-collapse: collapse;border-spacing: 0;
+}
+td,th{
+    border: 1px solid #000000;
+    padding: 2px; margin: 0;
+}
+.kcnm{
+    text-align: center;
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.teacher{
+    text-align: right;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 50px;
+}

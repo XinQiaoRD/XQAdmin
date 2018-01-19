@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8" />
+    <title>互动多媒体信息管理</title>
+    <meta name="keywords" content="MV3C管理后台" />
+    <meta name="description" content="MV3C管理后台" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<!--jcc-->
+    <!-- basic styles -->
+    <script type="text/javascript" src="../lib/jq/jquery-1.10.2.min.js" ></script>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+    <!-- page specific plugin styles -->
+
+    <!-- fonts -->
+
+    <!-- ace styles -->
+
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+
+	<link rel="stylesheet" href="jcc/inc.css" />
+<!--jcc-->
+
+<!--cc-->
+<body class="login-layout CC-bg">
+    <div class="main-container">
+        <div class="main-content CC-hcenter">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="login-container">
+                        <div class="center">
+                            <h1>
+                                <span class="white">互动多媒体信息管理</span>
+                            </h1>
+                            <h4 class="white">&copy;管理员后台 </h4>
+                        </div>
+
+                        <div class="space-6"></div>
+
+                        <div class="position-relative">
+                            <div id="login-box" class="login-box visible widget-box no-border">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <h4 class="header blue lighter bigger">
+                                            <i class="icon-coffee"></i>
+                                            管理员登录
+                                        </h4>
+
+                                        <div class="space-6"></div>
+
+                                        <form action="{$D}/back.php/login/login_op" method="post">
+                                            <fieldset>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input name="username" type="text" class="form-control" placeholder="帐号" />
+                                                        <i class="icon-user"></i>
+                                                    </span>
+                                                </label>
+
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input name="password" type="password" class="form-control" placeholder="密码" />
+                                                        <i class="icon-lock"></i>
+                                                    </span>
+                                                </label>
+
+                                                <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+
+                                                        <input name="code" id="code" type="text" class="form-control" placeholder="验证码">
+                                                        <i class="icon-undo"></i>
+                                                        <img src="{$D}/back/lib/code/code.php" id="getcode" align="absmiddle">　看不清，请点击
+                                                    </span>
+                                                </label>
+
+                                                <div class="space"></div>
+
+
+                                                <div class="space-4"></div>
+                                            </fieldset>
+                                            
+                                            
+                                            <div class="social-or-login center">
+                                                <span class="bigger-110">Login In</span>
+                                            </div>
+                                            
+                                            <div class="social-login center">
+                                                    <button type="submit" class="width-35 pull-center btn btn-sm btn-primary">
+                                                        <i class="icon-key"></i>
+                                                        登 录
+                                                    </button>
+                                            </div>
+                                            
+                                        </form>
+
+                                       
+                                    </div><!-- /widget-main -->
+
+                                    <div class="toolbar clearfix">
+                                        <div></div>
+                                        <div>
+                                            <!--<a href="/index.php" class="user-signup-link">-->
+                                                <!--返回首页-->
+                                                <!--<i class="icon-arrow-right"></i>-->
+                                            <!--</a>-->
+                                        </div>
+                                    </div>
+                                </div><!-- /widget-body -->
+                            </div><!-- /login-box -->
+                        </div><!-- /position-relative -->
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div>
+    </div><!-- /.main-container -->
+
+
+</body>
+
+<script type="text/javascript">
+$(function(){
+    $("#getcode").click(function(){
+        $(this).attr("src",'{$D}/back/lib/code/code.php?' + Math.random());
+        $("#code").val("");
+    });
+    
+    var wh = $(window).height();
+	var nh = (wh-550)/2;
+	$(".CC-hcenter").css("margin-top",nh);
+});
+</script>
+<!--cc-->
+</html>

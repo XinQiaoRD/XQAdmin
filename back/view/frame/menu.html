@@ -1,0 +1,103 @@
+<!--cc-->
+<ul class="nav nav-list CC-menu">
+
+    <li class="open" rel="{$D}/{$C}/stage">
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-desktop"></i>
+            <span class="menu-text"> 人大代表 </span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+
+        <ul class="submenu" style="display: block">
+            <li>
+                <a href="{$D}/{$C}/teacher/m">
+                    <i class="icon-double-angle-right"></i>
+                    人大代表
+                </a>
+                <a href="{$D}/{$C}/user/m">
+                    <i class="icon-double-angle-right"></i>
+                    社会活动
+                </a>
+                <a href="{$D}/{$C}/user/m">
+                    <i class="icon-double-angle-right"></i>
+                    会议
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="open" rel="{$D}/{$C}/stage">
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-desktop"></i>
+            <span class="menu-text"> 提案管理 </span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+
+        <ul class="submenu" style="display: block">
+            <li>
+                <a href="{$D}/{$C}/teacher/m">
+                    <i class="icon-double-angle-right"></i>
+                    提案管理
+                </a>
+                <a href="{$D}/{$C}/user/m">
+                    <i class="icon-double-angle-right"></i>
+                    回复内容
+                </a>
+                <a href="{$D}/{$C}/user/m">
+                    <i class="icon-double-angle-right"></i>
+                    相关报导
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="open" rel="{$D}/{$C}/stage">
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-desktop"></i>
+            <span class="menu-text"> 台账管理 </span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+
+        <ul class="submenu" style="display: block">
+            <li>
+                <a href="{$D}/{$C}/teacher/m">
+                    <i class="icon-double-angle-right"></i>
+                    年份管理
+                </a>
+                <a href="{$D}/{$C}/user/m">
+                    <i class="icon-double-angle-right"></i>
+                    台账管理
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="open" rel="{$D}/{$C}/stage">
+        <a href="#" class="dropdown-toggle">
+            <i class="icon-desktop"></i>
+            <span class="menu-text"> 数据导出 </span>
+            <b class="arrow icon-angle-down"></b>
+        </a>
+
+        <ul class="submenu" style="display: block">
+            <li>
+                <a href="{$D}/{$C}/excel/m">
+                    <i class="icon-double-angle-right"></i>
+                    数据导出
+                </a>
+            </li>
+        </ul>
+    </li>
+
+</ul><!-- /.nav-list -->
+
+<script type="text/javascript">
+$(function () {
+    $.each($('.CC-menu li'),function(){
+        if (location.href.indexOf($(this).attr('rel'))>0 ) {
+            $(this).addClass('active');
+        }
+    })
+})
+</script>
+<!--cc-->

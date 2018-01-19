@@ -1,0 +1,15 @@
+@charset "utf-8";
+/* CSS Document */
+li{list-style:none;} 
+.CC-bg{ background:url(../bg/01.jpg) no-repeat;background-size:100% 100%;}
+.CC-hcenter{ position:relative; }
+
+.wtt{ background-color:#030}
+.txt_info{ width:80%; height:100px; border:0px;}
+
+.CC_sel{ margin-top:13px;  text-align:right}
+@media screen and (min-width: 768px) {
+.CC_sel{ margin-bottom:5px; margin-top:-35px; text-align:right}
+}
+
+.Wdate{ height:35px;}
