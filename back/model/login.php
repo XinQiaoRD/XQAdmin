@@ -29,7 +29,7 @@ class mv3c_login{
     	$_SESSION['mv3c_admin']=1;
         $_SESSION['username']=$g->username;
     	$_SESSION['admin_tp']=$rs['tp'];
-        $cc->go('/back.php/teacher/m');
+        $cc->go('/back.php/main');
     }
 }
 ?>

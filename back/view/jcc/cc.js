@@ -45,6 +45,7 @@ Blib.createSearch = function(id , url){
                 window.location.href=url+key;
             }
         });
+        if(Blib.fn) Blib.fn();
     });
 };
 

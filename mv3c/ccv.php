@@ -1,4 +1,5 @@
 <?php
+//2018-1-20
 class ccv extends cc
 {
 	public $Val = array();//变量
@@ -658,6 +659,30 @@ class ccv extends cc
 		}
 		return false;
 	}
+
+    public function page($tnm){
+        if(!$this->db) $this->db();
+
+        $tnm = $this->sqlok($tnm);
+        $sql = 'SELECT '.$this->field." FROM $tnm".$this->where.$this->group.$this->having.$this->order.$this->limit;
+
+        $query = $this->db->query($sql);
+        $this->sqlcls();
+
+        $base = array();
+        if ($query) {
+
+            $i = 1;
+            while ($rs = $query->fetch_assoc()) {
+                $rs['i'] = $i;
+                $base[$i] = $rs;
+                $i++;
+            }
+            $query->free_result();
+        }
+
+        return $base;
+    }
 	
 	public function pagei($tnm, $page_num){
 		if(!$this->db) $this->db();

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8" />
+    <title>网站后台管理</title>
+
+    <meta name="keywords" content="mv3c" />
+    <meta name="description" content="mv3c" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<!-- basic styles -->
+
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.4.1.css" />
+<!-- page specific plugin styles -->
+
+<!-- ace styles -->
+
+<link rel="stylesheet" href="../assets/css/ace.min.css" />
+<link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+<script type="text/javascript" src="../../lib/jq/jquery-1.10.2.min.js" ></script>
+<script src="../assets/js/ace-extra.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+<!-- page specific plugin scripts -->
+<script src="../assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="../assets/js/bootbox.min.js"></script>
+<script src="../assets/js/jquery.easy-pie-chart.min.js"></script>
+<script src="../assets/js/jquery.gritter.min.js"></script>
+<script src="../assets/js/spin.min.js"></script>
+
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+
+<script type="text/javascript" src="../../lib/uploadify/jquery.uploadify.min.js"></script>
+<link rel="stylesheet" href="../../lib/uploadify/uploadify.css" />
+
+<script type="text/javascript">
+    $(function($) {
+        $('[data-rel=tooltip]').tooltip();
+    })
+</script>
+
+<body>
+<div class="navbar navbar-default" id="navbar">
+    <script type="text/javascript">
+        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+    </script>
+
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                    <i class="icon-cogs"></i>
+                    MV3C网站管理后台
+                </small>
+            </a><!-- /.brand -->
+        </div><!-- /.navbar-header -->
+    </div><!-- /.container -->
+</div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+
+    <div class="main-container-inner">
+
+
+        <div class="sidebar" id="sidebar">
+
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="page-content">
+                <!--cc-->
+                <div class="row"><div class="col-xs-12"><div class="tabbable">
+
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li><a href="{$D}/{$C}/{$M}/m"><i class="green fa fa-list bigger-110"></i> {$menu_m}</a></li>
+                        <li><a href="{$D}/{$C}/{$M}/person_add"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_person_add}</a></li>
+                        <li class="active"><a href="#"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_person_edit}</a></li>
+                    </ul>
+
+                    <div class="hr hr-dotted"></div>
+
+                    <form method="post" class="form-horizontal" role="form" action="{$D}/{$C}/{$M}/person_edit_op?id={$id}{$para}">
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 所在选区 </label>
+
+                            <div class="col-sm-9">
+                                <select name="area_id">
+                                    <option value="1" <!--if-area_id-({$area_id}=='1')-->selected<!--/if-area_id-->>第一选区</option>
+                                    <option value="2" <!--if-area_id-({$area_id}=='2')-->selected<!--/if-area_id-->>第二选区</option>
+                                    <option value="3" <!--if-area_id-({$area_id}=='3')-->selected<!--/if-area_id-->>第三选区</option>
+                                    <option value="4" <!--if-area_id-({$area_id}=='4')-->selected<!--/if-area_id-->>第四选区</option>
+                                    <option value="5" <!--if-area_id-({$area_id}=='5')-->selected<!--/if-area_id-->>第五选区</option>
+                                    <option value="6" <!--if-area_id-({$area_id}=='6')-->selected<!--/if-area_id-->>第六选区</option>
+                                    <option value="7" <!--if-area_id-({$area_id}=='7')-->selected<!--/if-area_id-->>第七选区</option>
+                                    <option value="8" <!--if-area_id-({$area_id}=='8')-->selected<!--/if-area_id-->>第八选区</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 代表名称</label>
+
+                            <div class="col-sm-9">
+                                <input name="nm" value="{$nm}" type="text" class="col-xs-10" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 性别 </label>
+
+                            <div class="col-sm-9">
+                                <select name="sex">
+                                    <option value="男" <!--if-sex-({$sex}=='男')-->selected<!--/if-sex-->>男</option>
+                                    <option value="女" <!--if-sex-({$sex}=='女')-->selected<!--/if-sex-->>女</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 出生日期</label>
+
+                            <div class="col-sm-9">
+                                <input name="birth" value="{$birth}" type="text" class="col-xs-10" placeholder="" onClick="WdatePicker()">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 电话</label>
+
+                            <div class="col-sm-9">
+                                <input name="tel" value="{$tel}" type="text" class="col-xs-10" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 排序</label>
+
+                            <div class="col-sm-9">
+                                <input name="seat" value="{$seat}" type="text" class="col-xs-10" placeholder="格式：1-100">
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 照片 </label>
+                            <div class="col-sm-9" id="photo">
+                                <script>
+                                    $(function(){
+                                        new PekeUP({
+                                            type:"img",
+                                            id:"photo",
+                                            name:"照片上传",
+                                            size:0.5,
+                                            edit:"{$photo}",
+                                            editUrl:"{$D}/uploads/person/",
+                                            url:"{$D}/{$C}/{$M}/ImgUpload",
+                                            delUrl:"{$D}/{$C}/{$M}/DelCache"
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 户籍 </label>
+
+                            <div class="col-sm-9">
+                                <input name="addr" value="{$addr}" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 党派 </label>
+
+                            <div class="col-sm-9">
+                                <input name="party" value="{$party}" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 民族 </label>
+
+                            <div class="col-sm-9">
+                                <input name="nation" value="{$nation}" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 学历 </label>
+
+                            <div class="col-sm-9">
+                                <input name="edu" value="{$edu}" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 参加工作时间 </label>
+
+                            <div class="col-sm-9">
+                                <input name="work_time" value="{$work_time}" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 单位及职务 </label>
+
+                            <div class="col-sm-9">
+                                <input name="work" value="{$work}" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 标题 </label>
+
+                            <div class="col-sm-9">
+                                <input name="m_tit" value="{$m_tit}" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 代表风采 </label>
+
+                            <div class="col-sm-9">
+                                <textarea name="m_info" id="m_info" rows="10" cols="80">{$m_info}</textarea>
+                                <script>
+                                    CKEDITOR.replace( 'm_info' );
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="space-4"></div>
+
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn btn-info" type="submit"><i class="icon-ok bigger-110"></i> 提 交</button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset"><i class="icon-undo bigger-110"></i> 重 置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div></div></div>
+                <!--cc-->
+            </div>
+        </div><!-- /.main-content -->
+    </div><!-- /.main-container-inner -->
+</div><!-- /.main-container -->
+
+</body>
+</html>

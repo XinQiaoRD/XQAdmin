@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8" />
+    <title>网站后台管理</title>
+
+    <meta name="keywords" content="mv3c" />
+    <meta name="description" content="mv3c" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<!-- basic styles -->
+
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.4.1.css" />
+<!-- page specific plugin styles -->
+
+<!-- ace styles -->
+
+<link rel="stylesheet" href="../assets/css/ace.min.css" />
+<link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+<script type="text/javascript" src="../../lib/jq/jquery-1.10.2.min.js" ></script>
+<script src="../assets/js/ace-extra.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+<script src="../assets/js/bootbox.min.js"></script>
+<!-- page specific plugin scripts -->
+<script src="../assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="../assets/js/bootbox.min.js"></script>
+<script src="../assets/js/jquery.easy-pie-chart.min.js"></script>
+<script src="../assets/js/jquery.gritter.min.js"></script>
+
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+
+
+<!--弹窗部分-->
+
+<!--弹窗部分-->
+
+<script type="text/javascript">
+    $(function($) {
+        $('[data-rel=tooltip]').tooltip();
+    })
+</script>
+
+<body>
+
+
+
+<div class="navbar navbar-default" id="navbar">
+    <script type="text/javascript">
+        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+    </script>
+
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                    <i class="icon-cogs"></i>
+                    MV3C网站管理后台
+                </small>
+            </a><!-- /.brand -->
+        </div><!-- /.navbar-header -->
+    </div><!-- /.container -->
+</div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+    <div class="main-container-inner">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <!--cc-->
+
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <div class="tabbable">
+                            <ul class="nav nav-tabs" id="myTab">
+                                <li class="active"><a href="{$D}/{$C}/{$M}/m"><i class="green fa fa-list bigger-110"></i> {$menu_m}</a></li>
+                                <li><a href="{$D}/{$C}/{$M}/word_add"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_word_add}</a></li>
+                            </ul>
+
+
+                            <div class="CC_sel">
+                                <button class="btn btn-sm btn-success" id="Select">点击搜索</button>
+                                <script>
+                                    $(function(){
+                                        Blib.searchRow({tit:"年份" , id:"year", type:"select",
+                                            val:[
+                                                {val:"", text:""},
+                                                {$year_sel}
+                                            ]
+                                        });
+                                        Blib.searchRow({tit:"选区" , id:"area_id", type:"select",
+                                            val:[
+                                                {val:"", text:""},
+                                                {val:"1", text:"第一选区"},
+                                                {val:"2", text:"第二选区"},
+                                                {val:"3", text:"第三选区"},
+                                                {val:"4", text:"第四选区"},
+                                                {val:"5", text:"第五选区"},
+                                                {val:"6", text:"第六选区"},
+                                                {val:"7", text:"第七选区"},
+                                                {val:"8", text:"第八选区"}
+                                            ]
+                                        });
+                                        Blib.searchRow({tit:"代表" , id:"pid", type:"select",
+                                            val:[
+                                                {val:"", text:""}
+                                            ]
+                                        });
+                                        Blib.createSearch("#Select", "{$D}/{$C}/{$M}/m/?");
+
+                                        Blib.fn = function(){
+                                            setTimeout(function(){
+                                                $("#area_id").change(function(){
+                                                    var aid = $("#area_id").val();
+                                                    $.get("{$D}/{$C}/{$M}/word_add_person_ajax?area_id="+aid, function(html){
+                                                        $("#pid").html(html);
+                                                    });
+                                                })
+                                            },200);
+
+                                        };
+
+                                    });
+                                </script>
+                            </div>
+
+
+                            <div class="hr hr-dotted"></div>
+                            <div class="table-responsive">
+                                <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th class="center">序</th>
+                                        <th>选区</th>
+                                        <th>标题</th>
+                                        <th>代表名称</th>
+                                        <th>年</th>
+                                        <th><i class="icon-cog bigger-110 hidden-480"></i>管理</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!--for-list-->
+                                    <tr>
+                                        <td class="center">{$rs.i}</td>
+                                        <td>{$rs.area_id}</td>
+                                        <td>{$rs.title}</td>
+                                        <td>{$rs.nm}</td>
+                                        <td>{$rs.year}</td>
+                                        <td>
+
+                                            <div class="btn-group tooltip-info" data-rel="tooltip" title="修改">
+                                                <a href="{$D}/{$C}/{$M}/word_edit?id={$rs.id}{$para}" class="btn btn-xs btn-primary tooltip-info">
+                                                    <i class="icon-edit bigger-120"></i>
+                                                </a>
+                                            </div>
+
+                                            <div class="btn-group">
+                                                <a data-toggle="dropdown" class="btn btn-xs btn-danger dropdown-toggle">
+                                                    <i class="icon-trash bigger-120"></i>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-danger">
+                                                    <li><a href="{$D}/{$C}/{$M}/word_del_op?id={$rs.id}{$para}">删除</a></li>
+                                                </ul>
+                                            </div><!-- /btn-group -->
+                                        </td>
+                                    </tr>
+                                    <!--/for-list-->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>{$bot}</div>
+                        </div>
+                    </div>
+                </div>
+                <!--cc-->
+            </div>
+        </div><!-- /.main-content -->
+    </div><!-- /.main-container-inner -->
+</div><!-- /.main-container -->
+</body>
+</html>

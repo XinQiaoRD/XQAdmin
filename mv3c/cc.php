@@ -1,4 +1,5 @@
 <?php
+//2018-1-20
 //特殊处理
 if(get_magic_quotes_gpc()) define('SQL', false);
 else define('SQL', true);
@@ -132,7 +133,7 @@ class cc{
 				$num          = count($this->fields);
 				for ($i=1; $i<$num; $i++) $sqlt.= $this->fields[$i].'='.$this->datas[$i].',';
 				$sqlt = substr($sqlt, 0, strlen($sqlt)-1);
-				$sqlt.= $this->where;
+				$sqlt.= $this->where.$this->limit;
 				break;
 			case 'num':
 				$sqlt = "SELECT count(*) AS num FROM $tnm".$this->where;

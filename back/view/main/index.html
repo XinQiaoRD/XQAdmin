@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8" />
+    <title>网站后台管理</title>
+
+    <meta name="keywords" content="mv3c" />
+    <meta name="description" content="mv3c" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<!-- basic styles -->
+
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.4.1.css" />
+<!-- page specific plugin styles -->
+
+<!-- ace styles -->
+
+<link rel="stylesheet" href="../assets/css/ace.min.css" />
+<link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+<script type="text/javascript" src="../../lib/jq/jquery-1.10.2.min.js" ></script>
+<script src="../assets/js/ace-extra.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+<script src="../assets/js/bootbox.min.js"></script>
+<!-- page specific plugin scripts -->
+<script src="../assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="../assets/js/bootbox.min.js"></script>
+<script src="../assets/js/jquery.easy-pie-chart.min.js"></script>
+<script src="../assets/js/jquery.gritter.min.js"></script>
+
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+
+
+<!--弹窗部分-->
+
+<!--弹窗部分-->
+
+<script type="text/javascript">
+    $(function($) {
+        $('[data-rel=tooltip]').tooltip();
+    })
+</script>
+
+<body>
+
+
+
+<div class="navbar navbar-default" id="navbar">
+    <script type="text/javascript">
+        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+    </script>
+
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                    <i class="icon-cogs"></i>
+                    MV3C网站管理后台
+                </small>
+            </a><!-- /.brand -->
+        </div><!-- /.navbar-header -->
+    </div><!-- /.container -->
+</div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+    <div class="main-container-inner">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <!--cc-->
+                <div style="padding: 10px; font-size: 22px;">欢迎登陆使用</div>
+                <div style="padding-left: 10px; font-size: 15px;">
+                    1. 选择左边菜单；<br>
+                    2. 修改系统数据；<br>
+                    3. 完成后，点击数据导出。
+                </div>
+                <!--cc-->
+            </div>
+        </div><!-- /.main-content -->
+    </div><!-- /.main-container-inner -->
+</div><!-- /.main-container -->
+</body>
+</html>
