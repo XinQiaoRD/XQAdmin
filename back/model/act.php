@@ -65,8 +65,6 @@ class mv3c_act{
                 $arr["nm"] = $rs["nm"];
             }
 
-            $cc->Val['bot'] = $cc->pagei_bot('/'.C.'.php/'.M."/m");
-
             $cc->order = "year@";
             $cc->field = "year";
             $rsc = $cc->opsql("year", "rsc");
@@ -76,6 +74,7 @@ class mv3c_act{
             $cc->Val["year_sel"] = implode(",", $year);
         }
 
+        $cc->Val['bot'] = $cc->pagei_bot('/'.C.'.php/'.M."/m");
 
         ///code end
 

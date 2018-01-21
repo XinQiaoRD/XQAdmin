@@ -91,35 +91,37 @@
 
                     <ul class="nav nav-tabs" id="myTab">
                         <li><a href="{$D}/{$C}/{$M}/m"><i class="green fa fa-list bigger-110"></i> {$menu_m}</a></li>
-                        <li class="active"><a href="#"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_meet_add}</a></li>
+                        <li><a href="{$D}/{$C}/{$M}/word_add"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_word_add}</a></li>
+                        <li class="active"><a href="#"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_word_edit}</a></li>
                     </ul>
 
                     <div class="hr hr-dotted"></div>
 
-                    <form method="post" class="form-horizontal" role="form" action="{$D}/{$C}/{$M}/meet_add_op">
+                    <form method="post" class="form-horizontal" role="form" action="{$D}/{$C}/{$M}/word_edit_op?id={$id}{$para}">
+
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" > 所在选区 </label>
 
                             <div class="col-sm-9">
-                                <select id="AID" name="area_id" onchange="getPerson()">
-                                    <option value="1" selected>第一选区</option>
-                                    <option value="2">第二选区</option>
-                                    <option value="3">第三选区</option>
-                                    <option value="4">第四选区</option>
-                                    <option value="5">第五选区</option>
-                                    <option value="6">第六选区</option>
-                                    <option value="7">第七选区</option>
-                                    <option value="8">第八选区</option>
+                                <select name="area_id" id="AID" onchange="getPerson()">
+                                    <option value="1" <!--if-area_id-({$area_id}=='1')-->selected<!--/if-area_id-->>第一选区</option>
+                                    <option value="2" <!--if-area_id-({$area_id}=='2')-->selected<!--/if-area_id-->>第二选区</option>
+                                    <option value="3" <!--if-area_id-({$area_id}=='3')-->selected<!--/if-area_id-->>第三选区</option>
+                                    <option value="4" <!--if-area_id-({$area_id}=='4')-->selected<!--/if-area_id-->>第四选区</option>
+                                    <option value="5" <!--if-area_id-({$area_id}=='5')-->selected<!--/if-area_id-->>第五选区</option>
+                                    <option value="6" <!--if-area_id-({$area_id}=='6')-->selected<!--/if-area_id-->>第六选区</option>
+                                    <option value="7" <!--if-area_id-({$area_id}=='7')-->selected<!--/if-area_id-->>第七选区</option>
+                                    <option value="8" <!--if-area_id-({$area_id}=='8')-->selected<!--/if-area_id-->>第八选区</option>
                                 </select>
                                 <script>
                                     function getPerson(){
                                         var aid = $("#AID").val();
-                                        $.get("{$D}/{$C}/{$M}/meet_add_person_ajax?area_id="+aid, function(html){
+                                        $.get("{$D}/{$C}/{$M}/word_add_person_ajax?area_id="+aid, function(html){
                                             $("#PID").html(html);
                                         });
                                     }
-                                    getPerson();
+                                    //getPerson();
                                 </script>
                             </div>
                         </div>
@@ -128,7 +130,7 @@
                             <label class="col-sm-3 control-label no-padding-right" > 代表名称</label>
 
                             <div class="col-sm-9">
-                                <select id="PID" name="pid" ></select>
+                                <select id="PID" name="pid" >{$pid_select}</select>
                             </div>
                         </div>
 
@@ -146,7 +148,7 @@
                             <label class="col-sm-3 control-label no-padding-right" > 排序</label>
 
                             <div class="col-sm-9">
-                                <input name="seat" value="" type="text" class="col-xs-10" placeholder="格式：1-100">
+                                <input name="seat" value="{$seat}" type="text" class="col-xs-10" placeholder="格式：1-100">
                             </div>
                         </div>
 
@@ -155,23 +157,61 @@
                             <label class="col-sm-3 control-label no-padding-right" > 标题 </label>
 
                             <div class="col-sm-9">
-                                <input name="title" value="" type="text" class="col-xs-10">
+                                <input name="title" value="{$title}" type="text" class="col-xs-10">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" > 简介 </label>
 
                             <div class="col-sm-9">
-                                <textarea name="desc_info" id="" cols="30" rows="5" class="col-xs-10"></textarea>
+                                <textarea name="desc_info" id="" cols="30" rows="5" class="col-xs-10">{$desc_info}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" > 会议资料 </label>
+                            <label class="col-sm-3 control-label no-padding-right" > 原始内容 </label>
 
                             <div class="col-sm-9">
-                                <textarea name="m_info" id="m_info" rows="10" cols="80"></textarea>
+                                <textarea name="word_info" id="word_info" rows="10" cols="80">{$word_info}</textarea>
                                 <script>
-                                    CKEDITOR.replace( 'm_info' );
+                                    CKEDITOR.replace( 'word_info' );
+                                </script>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 回复标题 </label>
+
+                            <div class="col-sm-9">
+                                <input name="back_tit" value="{$back_tit}" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 回复内容 </label>
+
+                            <div class="col-sm-9">
+                                <textarea name="back_info" id="back_info" rows="10" cols="80">{$back_info}</textarea>
+                                <script>
+                                    CKEDITOR.replace( 'back_info' );
+                                </script>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 报导标题 </label>
+
+                            <div class="col-sm-9">
+                                <input name="news_tit" value="{$news_tit}" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 相关报导 </label>
+
+                            <div class="col-sm-9">
+                                <textarea name="news_info" id="news_info" rows="10" cols="80">{$news_info}</textarea>
+                                <script>
+                                    CKEDITOR.replace( 'news_info' );
                                 </script>
                             </div>
                         </div>

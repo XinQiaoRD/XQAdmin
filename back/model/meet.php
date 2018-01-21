@@ -1,5 +1,5 @@
 <?php
-class mv3c_word{
+class mv3c_meet{
 
     public function index(){
         $this->m();
@@ -11,12 +11,12 @@ class mv3c_word{
         $para = $cc->setPara();
 
         $conf = array(
-            'nm' => 'word',//关键字
+            'nm' => 'meet',//关键字
             //bread;
             'bread' => array(
-                'm' => '提案管理',
-                'word_add' => '提案增加',
-                'word_edit' => '提案修改'
+                'm' => '会议资料管理',
+                'meet_add' => '会议资料增加',
+                'meet_edit' => '会议资料修改'
             ),
             'para' => $para
         );
@@ -55,7 +55,7 @@ class mv3c_word{
 
         $cc->order = "area_id,seat";
         $cc->field = "id,title,pid,year,area_id";
-        $cc->For['list'] = $cc->pagei("word",15);
+        $cc->For['list'] = $cc->pagei("meet",15);
 
         if(count7($cc->For['list'])){
             foreach ($cc->For['list'] as &$arr) {
@@ -64,8 +64,6 @@ class mv3c_word{
                 $rs = $cc->opsql("person");
                 $arr["nm"] = $rs["nm"];
             }
-
-            $cc->Val['bot'] = $cc->pagei_bot('/'.C.'.php/'.M."/m");
 
             $cc->order = "year@";
             $cc->field = "year";
@@ -76,6 +74,7 @@ class mv3c_word{
             $cc->Val["year_sel"] = implode(",", $year);
         }
 
+        $cc->Val['bot'] = $cc->pagei_bot('/'.C.'.php/'.M."/m");
 
         ///code end
 
@@ -83,7 +82,7 @@ class mv3c_word{
         $this->view_inc($cc, $c);
     }
 
-    public function word_add(){
+    public function meet_add(){
         $cc = new ccv;
         $c = $this->conf($cc);
 
@@ -91,11 +90,11 @@ class mv3c_word{
         $cc->field = "year,year";
         $cc->Val["year_select"] = $cc->form_select("year");
 
-        $cc->view_inc("{$c->nm}/word_add.html", 'main');
+        $cc->view_inc("{$c->nm}/meet_add.html", 'main');
         $this->view_inc($cc, $c);
     }
 
-    public function word_add_person_ajax(){
+    public function meet_add_person_ajax(){
 
         $cc = new ccv;
 
@@ -107,7 +106,7 @@ class mv3c_word{
         echo $cc->form_select("person");
     }
 
-    public function word_add_op(){
+    public function meet_add_op(){
         $cc = new cc;
         $c = $this->conf($cc);
 
@@ -121,22 +120,16 @@ class mv3c_word{
 
         $cc->sqli("title", $g->title);
         $cc->sqli("desc_info", $g->desc_info);
-        $cc->sqli("word_info", $g->word_info);
-
-        $cc->sqli("back_tit", $g->back_tit);
-        $cc->sqli("back_info", $g->back_info);
-
-        $cc->sqli("news_tit", $g->news_tit);
-        $cc->sqli("news_info", $g->news_info);
+        $cc->sqli("m_info", $g->m_info);
 
         $cc->sqli("seat", $g->seat);
 
-        $cc->opsql("word", 'add');
+        $cc->opsql("meet", 'add');
 
         $cc->go('/'.C.'.php/'.M."/m");
     }
 
-    public function word_edit(){
+    public function meet_edit(){
         $cc = new ccv;
         $c = $this->conf($cc);
 
@@ -145,7 +138,7 @@ class mv3c_word{
         if(!$id) $cc->go( -1 , "ID错误");
 
         $cc->where = "id = ".$id;
-        $cc->val("word");
+        $cc->val("meet");
 
         $cc->order = "year@";
         $cc->field = "year,year";
@@ -156,11 +149,11 @@ class mv3c_word{
         $cc->field = "id,nm";
         $cc->Val["pid_select"] = $cc->form_select("person", $cc->Val["pid"]);
 
-        $cc->view_inc("{$c->nm}/word_edit.html", 'main');
+        $cc->view_inc("{$c->nm}/meet_edit.html", 'main');
         $this->view_inc($cc, $c);
     }
 
-    public function word_edit_op(){
+    public function meet_edit_op(){
         $cc = new cc;
         $c = $this->conf($cc);
 
@@ -178,22 +171,16 @@ class mv3c_word{
 
         $cc->sqli("title", $g->title);
         $cc->sqli("desc_info", $g->desc_info);
-        $cc->sqli("word_info", $g->word_info);
-
-        $cc->sqli("back_tit", $g->back_tit);
-        $cc->sqli("back_info", $g->back_info);
-
-        $cc->sqli("news_tit", $g->news_tit);
-        $cc->sqli("news_info", $g->news_info);
+        $cc->sqli("m_info", $g->m_info);
 
         $cc->sqli("seat", $g->seat);
 
-        $cc->opsql("word", 'edit');
+        $cc->opsql("meet", 'edit');
 
         $cc->go('/'.C.'.php/'.M."/m?".$c->para);
     }
 
-    public function word_del_op(){
+    public function meet_del_op(){
         $cc = new cc;
         $c = $this->conf($cc);
 
@@ -202,7 +189,7 @@ class mv3c_word{
         if(!$id) $cc->go( -1 , "ID错误");
 
         $cc->where = "id='{$id}'";
-        $cc->opsql("word", 'del');
+        $cc->opsql("meet", 'del');
 
         $cc->go('/'.C.'.php/'.M."/m?".$c->para);
     }

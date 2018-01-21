@@ -91,12 +91,12 @@
 
                     <ul class="nav nav-tabs" id="myTab">
                         <li><a href="{$D}/{$C}/{$M}/m"><i class="green fa fa-list bigger-110"></i> {$menu_m}</a></li>
-                        <li class="active"><a href="#"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_meet_add}</a></li>
+                        <li class="active"><a href="#"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_word_add}</a></li>
                     </ul>
 
                     <div class="hr hr-dotted"></div>
 
-                    <form method="post" class="form-horizontal" role="form" action="{$D}/{$C}/{$M}/meet_add_op">
+                    <form method="post" class="form-horizontal" role="form" action="{$D}/{$C}/{$M}/word_add_op">
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" > 所在选区 </label>
@@ -115,7 +115,7 @@
                                 <script>
                                     function getPerson(){
                                         var aid = $("#AID").val();
-                                        $.get("{$D}/{$C}/{$M}/meet_add_person_ajax?area_id="+aid, function(html){
+                                        $.get("{$D}/{$C}/{$M}/word_add_person_ajax?area_id="+aid, function(html){
                                             $("#PID").html(html);
                                         });
                                     }
@@ -166,12 +166,50 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" > 会议资料 </label>
+                            <label class="col-sm-3 control-label no-padding-right" > 原始内容 </label>
 
                             <div class="col-sm-9">
-                                <textarea name="m_info" id="m_info" rows="10" cols="80"></textarea>
+                                <textarea name="word_info" id="word_info" rows="10" cols="80"></textarea>
                                 <script>
-                                    CKEDITOR.replace( 'm_info' );
+                                    CKEDITOR.replace( 'word_info' );
+                                </script>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 回复标题 </label>
+
+                            <div class="col-sm-9">
+                                <input name="back_tit" value="" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 回复内容 </label>
+
+                            <div class="col-sm-9">
+                                <textarea name="back_info" id="back_info" rows="10" cols="80"></textarea>
+                                <script>
+                                    CKEDITOR.replace( 'back_info' );
+                                </script>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 报导标题 </label>
+
+                            <div class="col-sm-9">
+                                <input name="news_tit" value="" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 相关报导 </label>
+
+                            <div class="col-sm-9">
+                                <textarea name="news_info" id="news_info" rows="10" cols="80"></textarea>
+                                <script>
+                                    CKEDITOR.replace( 'news_info' );
                                 </script>
                             </div>
                         </div>

@@ -65,7 +65,6 @@ class mv3c_word{
                 $arr["nm"] = $rs["nm"];
             }
 
-            $cc->Val['bot'] = $cc->pagei_bot('/'.C.'.php/'.M."/m");
 
             $cc->order = "year@";
             $cc->field = "year";
@@ -76,6 +75,7 @@ class mv3c_word{
             $cc->Val["year_sel"] = implode(",", $year);
         }
 
+        $cc->Val['bot'] = $cc->pagei_bot('/'.C.'.php/'.M."/m");
 
         ///code end
 
