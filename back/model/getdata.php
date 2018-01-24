@@ -185,10 +185,11 @@ class mv3c_getdata{
 
         //add
         $cc->where = "id=".$rs["pid"];
-        $cc->field = "nm,photo";
+        $cc->field = "nm,photo,photo_size";
         $prs = $cc->opsql("person");
         $rs["nm"] = $prs["nm"];
         $rs["photo"] = $prs["photo"];
+        $rs["photo_size"] = $prs["photo_size"];
         //add
 
         $row = '{';

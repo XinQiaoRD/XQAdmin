@@ -73,6 +73,7 @@ class mv3c_person{
         $cc->sqli("tel", $g->tel);
 
         $cc->sqli("photo", $g->photo);
+        $cc->sqli("photo_size", $g->photo_size);
         $cc->sqli("addr", $g->addr);
         $cc->sqli("party", $g->party);
         $cc->sqli("nation", $g->nation);
@@ -131,6 +132,7 @@ class mv3c_person{
         $cc->sqli("tel", $g->tel);
 
         $cc->sqli("photo", $g->photo);
+        $cc->sqli("photo_size", $g->photo_size);
         $cc->sqli("addr", $g->addr);
         $cc->sqli("party", $g->party);
         $cc->sqli("nation", $g->nation);
