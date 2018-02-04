@@ -161,14 +161,32 @@
                         <hr />
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" > 照片 </label>
+                            <label class="col-sm-3 control-label no-padding-right" > 头像照片 </label>
+                            <div class="col-sm-9" id="head">
+                                <script>
+                                    $(function(){
+                                        new PekeUP({
+                                            type:"img",
+                                            id:"head",
+                                            name:"头像照片",
+                                            size:0.5,
+                                            url:"{$D}/{$C}/{$M}/ImgUpload",
+                                            delUrl:"{$D}/{$C}/{$M}/DelCache"
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 会议照片 </label>
                             <div class="col-sm-9" id="photo">
                                 <script>
                                     $(function(){
                                         new PekeUP({
                                             type:"img",
                                             id:"photo",
-                                            name:"照片上传",
+                                            name:"会议照片",
                                             size:0.5,
                                             url:"{$D}/{$C}/{$M}/ImgUpload",
                                             delUrl:"{$D}/{$C}/{$M}/DelCache"

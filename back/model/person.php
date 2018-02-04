@@ -72,6 +72,8 @@ class mv3c_person{
         $cc->sqli("birth", $g->birth);
         $cc->sqli("tel", $g->tel);
 
+        $cc->sqli("head", $g->head);
+        $cc->sqli("head_size", $g->head_size);
         $cc->sqli("photo", $g->photo);
         $cc->sqli("photo_size", $g->photo_size);
         $cc->sqli("addr", $g->addr);
@@ -91,6 +93,7 @@ class mv3c_person{
         $cc->opsql("person", 'add');
 
         if($g->photo) $up->moveFile("/uploads/cache/".$g->photo , "/uploads/person/".$g->photo);
+        if($g->head) $up->moveFile("/uploads/cache/".$g->head , "/uploads/person/".$g->head);
 
         $cc->go('/'.C.'.php/'.M."/m");
     }
@@ -124,6 +127,7 @@ class mv3c_person{
 
         $cc->where = "id=".$id;
 
+        $up->sqliCache($g->head, "head", "person", $rs, $cc, "strs");
         $up->sqliCache($g->photo, "photo", "person", $rs, $cc, "strs");
 
         $cc->sqli("nm", $g->nm);
@@ -131,6 +135,8 @@ class mv3c_person{
         $cc->sqli("birth", $g->birth);
         $cc->sqli("tel", $g->tel);
 
+        $cc->sqli("head", $g->head);
+        $cc->sqli("head_size", $g->head_size);
         $cc->sqli("photo", $g->photo);
         $cc->sqli("photo_size", $g->photo_size);
         $cc->sqli("addr", $g->addr);
@@ -163,6 +169,7 @@ class mv3c_person{
 
         $cc->where = "id='{$id}'";
         $rs = $cc->opsql("person");
+        $up->delFile("/uploads/person/", $rs["head"]);
         $up->delFile("/uploads/person/", $rs["photo"]);
 
         $cc->where = "id='{$id}'";
