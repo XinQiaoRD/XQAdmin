@@ -29,6 +29,16 @@ class mv3c_getdata{
         $json.= '
             "year_word":{'.$json_year_word.'},';
 
+        //代表
+        $arr_person = [];
+        $cc->order = "id";
+        $rsc = $cc->opsql("person", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_person[] = $this->arr_person($cc, $rs);
+        }
+        $json_person = implode(",", $arr_person);
+        $json.= '
+            "person":{'.$json_person.'},';
 
         //word提案
         $arr_word = [];
