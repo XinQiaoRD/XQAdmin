@@ -8,14 +8,20 @@ class mv3c_getdata{
 
 
         //台账
-        $json = '{"date": "'.$cc->now().'",';
+        $json_all = '{"date": "'.$cc->now().'",';
 
+
+        //代表建议
+        $json = '
+"page1":{';
         //year
         $arr_year = [];
         $arr_year_word = [];
 
         $cc->order = "year@";
-        $rsc = $cc->opsql("year", "rsc");
+        $cc->group = "year";
+        $cc->field = "year";
+        $rsc = $cc->opsql("word", "rsc");
         while($rs = $cc->rs($rsc)){
             $arr_year[] = $rs["year"];
             $arr_year_word[] = $this->arr_year_word($rs["year"], $cc);
@@ -49,14 +55,92 @@ class mv3c_getdata{
         }
         $json_word = implode(",", $arr_word);
         $json.= '
-            "word":{'.$json_word.'},';
+            "word":{'.$json_word.'}';
+        $json.= '},';
+        $json_all.= $json;
+
+
+        //接待选民
+        $json = '
+"page2":{';
+        //year
+        $arr_year = [];
+        $arr_year_id = [];
+
+        $cc->order = "year@";
+        $cc->group = "year";
+        $cc->field = "year";
+        $rsc = $cc->opsql("receive", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_year[] = $rs["year"];
+
+            $arr_year_id[] = $this->arr_year_id($rs["year"], $cc, "receive");
+        }
+        $json_year = implode(",", $arr_year);
+        $json.= '
+            "year":['.$json_year.'],';
+        $json_year_id = implode(",", $arr_year_id);
+        $json.= '
+            "year_id":{'.$json_year_id.'},';
+
+        $arr_page = [];
+        $cc->order = "id";
+        $rsc = $cc->opsql("receive", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_page[] = '
+            "'.$rs["id"].'":'.$this->rsToJson($rs);
+        }
+        $json_page = implode(",", $arr_page);
+        $json.= '
+            "receive":{'.$json_page.'}';
+
+        $json.= '},';
+        $json_all.= $json;
+
+
+        //议政会
+        $json = '
+"page3":{';
+        //year
+        $arr_year = [];
+        $arr_year_id = [];
+
+        $cc->order = "year@";
+        $cc->group = "year";
+        $cc->field = "year";
+        $rsc = $cc->opsql("message", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_year[] = $rs["year"];
+
+            $arr_year_id[] = $this->arr_year_id($rs["year"], $cc, "message");
+        }
+        $json_year = implode(",", $arr_year);
+        $json.= '
+            "year":['.$json_year.'],';
+        $json_year_id = implode(",", $arr_year_id);
+        $json.= '
+            "year_id":{'.$json_year_id.'},';
+
+        $arr_page = [];
+        $cc->order = "id";
+        $rsc = $cc->opsql("message", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_page[] = '
+            "'.$rs["id"].'":'.$this->rsToJson($rs);
+        }
+        $json_page = implode(",", $arr_page);
+        $json.= '
+            "message":{'.$json_page.'}';
+
+        $json.= '},';
+        $json_all.= $json;
 
 
         //end
-        $json.= '
+        $json_all.= '
         "download_finish": 0}';
 
-        $up->createJson("/uploads/", "tz_data.json", $json);
+        $up->createJson("/uploads/", "tz_data.json", $json_all);
 
 
         $cc->go(-1,"更新完成");
@@ -71,6 +155,12 @@ class mv3c_getdata{
 
         //人大代表
         $json = '{"date": "'.$cc->now().'",';
+
+        //简介
+        $cc->where = "id=1";
+        $rs = $cc->opsql("start");
+        $json.= '
+            "start":"'.$rs["m_info"].'",';
 
         //area
         $arr_area_person = [];
@@ -158,6 +248,27 @@ class mv3c_getdata{
 
         $cc->go(-1,"更新完成");
 
+    }
+
+    private function arr_year_id($year, &$cc, $db){
+
+        $json = '
+        "'.$year.'":[';
+
+        $cc->where = "year=".$year;
+        $cc->order = "seat";
+        $cc->field = "id";
+        $rsc = $cc->opsql($db, "rsc");
+
+        $arr = [];
+        while($rs = $cc->rs($rsc)){
+            $arr[] = $rs["id"];
+        }
+
+        $json_t = implode(",", $arr);
+        $json.= $json_t.']';
+
+        return $json;
     }
 
     private function arr_year_word($year, &$cc){

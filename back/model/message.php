@@ -1,5 +1,5 @@
 <?php
-class mv3c_word{
+class mv3c_message{
 
     public function index(){
         $this->m();
@@ -11,12 +11,12 @@ class mv3c_word{
         $para = $cc->setPara();
 
         $conf = array(
-            'nm' => 'word',//关键字
+            'nm' => 'message',//关键字
             //bread;
             'bread' => array(
-                'm' => '提案管理',
-                'word_add' => '提案增加',
-                'word_edit' => '提案修改'
+                'm' => '议政会资料管理',
+                'message_add' => '议政会资料增加',
+                'message_edit' => '议政会资料修改'
             ),
             'para' => $para
         );
@@ -31,50 +31,31 @@ class mv3c_word{
         $cc = new ccv;
         $c = $this->conf($cc);
 
-        $para = $cc->setPara("year,area_id,pid");
+        $para = $cc->setPara("year");
 
         //code
         $g = $cc->get();
 
-        $cc->where = "";
-
-        if($g->pid){
-
-            $cc->where .= "pid='".trim($g->pid)."'";
-        }else{
-
-            if($g->area_id){
-                if($cc->where) $cc->where.= " and ";
-                $cc->where .= "area_id='".trim($g->area_id)."'";
-            }
+        $year = [];
+        $cc->order = "year@";
+        $cc->field = "year";
+        $rsc = $cc->opsql("year", "rsc");
+        while ($rs = $cc->rs($rsc)){
+            $year[] = '{val:"'.$rs["year"].'", text:"'.$rs["year"].'"}';
         }
+        $cc->Val["year_sel"] = implode(",", $year);
+
+
+        $cc->where = "";
 
         if($g->year){
             if($cc->where) $cc->where.= " and ";
             $cc->where .= "year='".trim($g->year)."'";
         }
 
-        $cc->order = "area_id,seat";
-        $cc->field = "id,title,pid,year,area_id";
-        $cc->For['list'] = $cc->pagei("word",15);
-
-        if(count7($cc->For['list'])){
-            foreach ($cc->For['list'] as &$arr) {
-                $cc->where = "id=".$arr["pid"];
-                $cc->field = "nm";
-                $rs = $cc->opsql("person");
-                $arr["nm"] = $rs["nm"];
-            }
-
-
-            $cc->order = "year@";
-            $cc->field = "year";
-            $rsc = $cc->opsql("year", "rsc");
-            while ($rs = $cc->rs($rsc)){
-                $year[] = '{val:"'.$rs["year"].'", text:"'.$rs["year"].'"}';
-            }
-            $cc->Val["year_sel"] = implode(",", $year);
-        }
+        $cc->order = "year@,seat";
+        $cc->field = "id,year,title,m_info,work";
+        $cc->For['list'] = $cc->pagei("message",15);
 
         $cc->Val['bot'] = $cc->pagei_bot('/'.C.'.php/'.M."/m", $para);
 
@@ -84,7 +65,7 @@ class mv3c_word{
         $this->view_inc($cc, $c);
     }
 
-    public function word_add(){
+    public function message_add(){
         $cc = new ccv;
         $c = $this->conf($cc);
 
@@ -92,52 +73,33 @@ class mv3c_word{
         $cc->field = "year,year";
         $cc->Val["year_select"] = $cc->form_select("year");
 
-        $cc->view_inc("{$c->nm}/word_add.html", 'main');
+        $cc->view_inc("{$c->nm}/message_add.html", 'main');
         $this->view_inc($cc, $c);
     }
 
-    public function word_add_person_ajax(){
-
-        $cc = new ccv;
-
-        $g = $cc->get();
-
-        $cc->where = "area_id=".$g->area_id;
-        $cc->field = "id,nm";
-        $cc->order = "seat";
-        echo $cc->form_select("person");
-    }
-
-    public function word_add_op(){
+    public function message_add_op(){
         $cc = new cc;
         $c = $this->conf($cc);
 
         $g = $cc->get();
 
-        if(!$g->pid) $cc->go( -1 , "请选择代表");
 
-        $cc->sqli("pid", $g->pid);
-        $cc->sqli("area_id", $g->area_id);
         $cc->sqli("year", $g->year);
 
         $cc->sqli("title", $g->title);
-        $cc->sqli("desc_info", $g->desc_info);
-        $cc->sqli("word_info", $g->word_info);
-
-        $cc->sqli("back_tit", $g->back_tit);
         $cc->sqli("back_info", $g->back_info);
-
-        $cc->sqli("news_tit", $g->news_tit);
-        $cc->sqli("news_info", $g->news_info);
+        $cc->sqli("m_info", $g->m_info);
+        $cc->sqli("work", $g->work);
+        $cc->sqli("lead", $g->lead);
 
         $cc->sqli("seat", $g->seat);
 
-        $cc->opsql("word", 'add');
+        $cc->opsql("message", 'add');
 
         $cc->go('/'.C.'.php/'.M."/m");
     }
 
-    public function word_edit(){
+    public function message_edit(){
         $cc = new ccv;
         $c = $this->conf($cc);
 
@@ -146,55 +108,44 @@ class mv3c_word{
         if(!$id) $cc->go( -1 , "ID错误");
 
         $cc->where = "id = ".$id;
-        $cc->val("word");
+        $cc->val("message");
 
         $cc->order = "year@";
         $cc->field = "year,year";
         $cc->Val["year_select"] = $cc->form_select("year", $cc->Val["year"]);
 
-        $cc->order = "seat";
-        $cc->where = "area_id=".$cc->Val["area_id"];
-        $cc->field = "id,nm";
-        $cc->Val["pid_select"] = $cc->form_select("person", $cc->Val["pid"]);
 
-        $cc->view_inc("{$c->nm}/word_edit.html", 'main');
+        $cc->view_inc("{$c->nm}/message_edit.html", 'main');
         $this->view_inc($cc, $c);
     }
 
-    public function word_edit_op(){
+    public function message_edit_op(){
         $cc = new cc;
         $c = $this->conf($cc);
 
         $g = $cc->get();
         $id = $g->id;
         if(!$id) $cc->go( -1 , "ID错误");
-        if(!$g->pid) $cc->go( -1 , "请选择代表");
 
 
         $cc->where = "id=".$id;
 
-        $cc->sqli("pid", $g->pid);
-        $cc->sqli("area_id", $g->area_id);
         $cc->sqli("year", $g->year);
 
         $cc->sqli("title", $g->title);
-        $cc->sqli("desc_info", $g->desc_info);
-        $cc->sqli("word_info", $g->word_info);
-
-        $cc->sqli("back_tit", $g->back_tit);
         $cc->sqli("back_info", $g->back_info);
-
-        $cc->sqli("news_tit", $g->news_tit);
-        $cc->sqli("news_info", $g->news_info);
+        $cc->sqli("m_info", $g->m_info);
+        $cc->sqli("work", $g->work);
+        $cc->sqli("lead", $g->lead);
 
         $cc->sqli("seat", $g->seat);
 
-        $cc->opsql("word", 'edit');
+        $cc->opsql("message", 'edit');
 
         $cc->go('/'.C.'.php/'.M."/m?".$c->para);
     }
 
-    public function word_del_op(){
+    public function message_del_op(){
         $cc = new cc;
         $c = $this->conf($cc);
 
@@ -203,7 +154,7 @@ class mv3c_word{
         if(!$id) $cc->go( -1 , "ID错误");
 
         $cc->where = "id='{$id}'";
-        $cc->opsql("word", 'del');
+        $cc->opsql("message", 'del');
 
         $cc->go('/'.C.'.php/'.M."/m?".$c->para);
     }

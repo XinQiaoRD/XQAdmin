@@ -1,5 +1,5 @@
 <?php
-class mv3c_act{
+class mv3c_project{
 
     public function index(){
         $this->m();
@@ -11,12 +11,12 @@ class mv3c_act{
         $para = $cc->setPara();
 
         $conf = array(
-            'nm' => 'act',//关键字
+            'nm' => 'project',//关键字
             //bread;
             'bread' => array(
-                'm' => '社会活动管理',
-                'act_add' => '社会活动增加',
-                'act_edit' => '社会活动修改'
+                'm' => '民生实事管理',
+                'project_add' => '民生实事增加',
+                'project_edit' => '民生实事修改'
             ),
             'para' => $para
         );
@@ -27,54 +27,37 @@ class mv3c_act{
         return (object)$conf;
     }
 
+    //人大代表
     public function m(){
         $cc = new ccv;
         $c = $this->conf($cc);
 
-
+        $para = $cc->setPara("year");
         //code
         $g = $cc->get();
 
-        $cc->where = "";
-
-        if($g->pid){
-
-            $cc->where .= "pid='".trim($g->pid)."'";
-        }else{
-
-            if($g->area_id){
-                if($cc->where) $cc->where.= " and ";
-                $cc->where .= "area_id='".trim($g->area_id)."'";
-            }
+        $year = [];
+        $cc->order = "year@";
+        $cc->field = "year";
+        $rsc = $cc->opsql("year", "rsc");
+        while ($rs = $cc->rs($rsc)){
+            $year[] = '{val:"'.$rs["year"].'", text:"'.$rs["year"].'"}';
         }
+        $cc->Val["year_sel"] = implode(",", $year);
+
+
+        $cc->where = "";
 
         if($g->year){
             if($cc->where) $cc->where.= " and ";
             $cc->where .= "year='".trim($g->year)."'";
         }
 
-        $cc->order = "area_id,seat";
-        $cc->field = "id,title,pid,pic,area_id";
-        $cc->For['list'] = $cc->pagei("act",15);
+        $cc->order = "year@,seat";
+        $cc->field = "id,year,title, m_info, work";
+        $cc->For['list'] = $cc->pagei("project",15);
 
-        if(count7($cc->For['list'])){
-            foreach ($cc->For['list'] as &$arr) {
-                $cc->where = "id=".$arr["pid"];
-                $cc->field = "nm";
-                $rs = $cc->opsql("person");
-                $arr["nm"] = $rs["nm"];
-            }
-
-//            $cc->order = "year@";
-//            $cc->field = "year";
-//            $rsc = $cc->opsql("year", "rsc");
-//            while ($rs = $cc->rs($rsc)){
-//                $year[] = '{val:"'.$rs["year"].'", text:"'.$rs["year"].'"}';
-//            }
-//            $cc->Val["year_sel"] = implode(",", $year);
-        }
-
-        $cc->Val['bot'] = $cc->pagei_bot('/'.C.'.php/'.M."/m");
+        $cc->Val['bot'] = $cc->pagei_bot('/'.C.'.php/'.M."/m", $para);
 
         ///code end
 
@@ -82,8 +65,7 @@ class mv3c_act{
         $this->view_inc($cc, $c);
     }
 
-    public function act_add(){
-
+    public function project_add(){
         $cc = new ccv;
         $c = $this->conf($cc);
 
@@ -91,50 +73,39 @@ class mv3c_act{
         $cc->field = "year,year";
         $cc->Val["year_select"] = $cc->form_select("year");
 
-        $cc->view_inc("{$c->nm}/act_add.html", 'main');
+        $cc->view_inc("{$c->nm}/project_add.html", 'main');
         $this->view_inc($cc, $c);
     }
 
-    public function act_add_person_ajax(){
-
-        $cc = new ccv;
-
-        $g = $cc->get();
-
-        $cc->where = "area_id=".$g->area_id;
-        $cc->field = "id,nm";
-        $cc->order = "seat";
-        echo $cc->form_select("person");
-    }
-
-    public function act_add_op(){
+    public function project_add_op(){
         $cc = new cc;
         $up = new pekeUpload;
         $c = $this->conf($cc);
 
         $g = $cc->get();
 
-        if(!$g->pid) $cc->go( -1 , "请选择代表");
-
-        $cc->sqli("pid", $g->pid);
-        $cc->sqli("area_id", $g->area_id);
-
         $cc->sqli("title", $g->title);
+        $cc->sqli("year", $g->year);
 
-        $cc->sqli("pic", $g->pic);
-        $cc->sqli("pic_size", $g->pic_size);
+        $cc->sqli("img", $g->img);
+        $cc->sqli("img_size", $g->img_size);
+
+        $cc->sqli("money", $g->money);
+        $cc->sqli("m_info", $g->m_info);
+        $cc->sqli("times", $g->times);
+        $cc->sqli("work", $g->work);
+        $cc->sqli("lead", $g->lead);
 
         $cc->sqli("seat", $g->seat);
 
-        $cc->opsql("act", 'add');
+        $cc->opsql("project", 'add');
 
-        if($g->pic) $up->moveFile("/uploads/cache/".$g->pic , "/uploads/act/".$g->pic);
+        if($g->photo) $up->moveFile("/uploads/cache/".$g->photo , "/uploads/project/".$g->photo);
 
         $cc->go('/'.C.'.php/'.M."/m");
-
     }
 
-    public function act_edit(){
+    public function project_edit(){
         $cc = new ccv;
         $c = $this->conf($cc);
 
@@ -143,22 +114,17 @@ class mv3c_act{
         if(!$id) $cc->go( -1 , "ID错误");
 
         $cc->where = "id = ".$id;
-        $cc->val("act");
+        $cc->val("project");
 
-//        $cc->order = "year@";
-//        $cc->field = "year,year";
-//        $cc->Val["year_select"] = $cc->form_select("year", $cc->Val["year"]);
+        $cc->order = "year@";
+        $cc->field = "year,year";
+        $cc->Val["year_select"] = $cc->form_select("year", $cc->Val["year"]);
 
-        $cc->order = "seat";
-        $cc->where = "area_id=".$cc->Val["area_id"];
-        $cc->field = "id,nm";
-        $cc->Val["pid_select"] = $cc->form_select("person", $cc->Val["pid"]);
-
-        $cc->view_inc("{$c->nm}/act_edit.html", 'main');
+        $cc->view_inc("{$c->nm}/project_edit.html", 'main');
         $this->view_inc($cc, $c);
     }
 
-    public function act_edit_op(){
+    public function project_edit_op(){
         $cc = new cc;
         $up = new pekeUpload;
         $c = $this->conf($cc);
@@ -166,35 +132,35 @@ class mv3c_act{
         $g = $cc->get();
         $id = $g->id;
         if(!$id) $cc->go( -1 , "ID错误");
-        if(!$g->pid) $cc->go( -1 , "请选择代表");
 
         $cc->where = "id=".$id;
-        $rs = $cc->opsql("act");
+        $rs = $cc->opsql("project");
 
-        $cc->where = "id=".$id;
-
-        $up->sqliCache($g->pic, "pic", "act", $rs, $cc, "strs");
+        $up->sqliCache($g->img, "img", "project", $rs, $cc, "strs");
 
 
         $cc->where = "id=".$id;
-
-        $cc->sqli("pid", $g->pid);
-        $cc->sqli("area_id", $g->area_id);
 
         $cc->sqli("title", $g->title);
+        $cc->sqli("year", $g->year);
 
-        $cc->sqli("pic", $g->pic);
-        $cc->sqli("pic_size", $g->pic_size);
+        $cc->sqli("img", $g->img);
+        $cc->sqli("img_size", $g->img_size);
+
+        $cc->sqli("money", $g->money);
+        $cc->sqli("m_info", $g->m_info);
+        $cc->sqli("times", $g->times);
+        $cc->sqli("work", $g->work);
+        $cc->sqli("lead", $g->lead);
 
         $cc->sqli("seat", $g->seat);
 
-        $cc->opsql("act", 'edit');
+        $cc->opsql("project", 'edit');
 
         $cc->go('/'.C.'.php/'.M."/m?".$c->para);
-
     }
 
-    public function act_del_op(){
+    public function project_del_op(){
         $cc = new cc;
         $up = new pekeUpload;
         $c = $this->conf($cc);
@@ -204,16 +170,18 @@ class mv3c_act{
         if(!$id) $cc->go( -1 , "ID错误");
 
         $cc->where = "id='{$id}'";
-        $rs = $cc->opsql("act");
-        $up->delFile("/uploads/act/", $rs["pic"]);
+        $rs = $cc->opsql("project");
+        $up->delFile("/uploads/project/", $rs["img"]);
 
         $cc->where = "id='{$id}'";
-        $cc->opsql("act", 'del');
+        $cc->opsql("project", 'del');
 
         $cc->go('/'.C.'.php/'.M."/m?".$c->para);
     }
 
+
     ///////////
+
     public function ImgUpload(){
 
         $cc = new cc;

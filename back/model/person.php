@@ -125,10 +125,11 @@ class mv3c_person{
         $cc->where = "id=".$id;
         $rs = $cc->opsql("person");
 
-        $cc->where = "id=".$id;
-
         $up->sqliCache($g->head, "head", "person", $rs, $cc, "strs");
         $up->sqliCache($g->photo, "photo", "person", $rs, $cc, "strs");
+
+
+        $cc->where = "id=".$id;
 
         $cc->sqli("nm", $g->nm);
         $cc->sqli("sex", $g->sex);

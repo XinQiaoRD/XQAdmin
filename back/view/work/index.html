@@ -94,7 +94,7 @@
                         <div class="tabbable">
                             <ul class="nav nav-tabs" id="myTab">
                                 <li class="active"><a href="{$D}/{$C}/{$M}/m"><i class="green fa fa-list bigger-110"></i> {$menu_m}</a></li>
-                                <li><a href="{$D}/{$C}/{$M}/act_add"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_act_add}</a></li>
+                                <li><a href="{$D}/{$C}/{$M}/work_add"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_work_add}</a></li>
                             </ul>
 
 
@@ -102,37 +102,13 @@
                                 <button class="btn btn-sm btn-success" id="Select">点击搜索</button>
                                 <script>
                                     $(function(){
-                                        Blib.searchRow({tit:"选区" , id:"area_id", type:"select",
+                                        Blib.searchRow({tit:"年份" , id:"year", type:"select",
                                             val:[
                                                 {val:"", text:""},
-                                                {val:"1", text:"第一选区"},
-                                                {val:"2", text:"第二选区"},
-                                                {val:"3", text:"第三选区"},
-                                                {val:"4", text:"第四选区"},
-                                                {val:"5", text:"第五选区"},
-                                                {val:"6", text:"第六选区"},
-                                                {val:"7", text:"第七选区"},
-                                                {val:"8", text:"第八选区"}
-                                            ]
-                                        });
-                                        Blib.searchRow({tit:"代表" , id:"pid", type:"select",
-                                            val:[
-                                                {val:"", text:""}
+                                                {$year_sel}
                                             ]
                                         });
                                         Blib.createSearch("#Select", "{$D}/{$C}/{$M}/m/?");
-
-                                        Blib.fn = function(){
-                                            setTimeout(function(){
-                                                $("#area_id").change(function(){
-                                                    var aid = $("#area_id").val();
-                                                    $.get("{$D}/{$C}/{$M}/act_add_person_ajax?area_id="+aid, function(html){
-                                                        $("#pid").html(html);
-                                                    });
-                                                })
-                                            },200);
-
-                                        };
 
                                     });
                                 </script>
@@ -145,10 +121,9 @@
                                     <thead>
                                     <tr>
                                         <th class="center">序</th>
-                                        <th>选区</th>
-                                        <th>社会活动</th>
-                                        <th>代表名称</th>
-                                        <th>图片</th>
+                                        <th>年</th>
+                                        <th>述职人</th>
+                                        <th>内容</th>
                                         <th><i class="icon-cog bigger-110 hidden-480"></i>管理</th>
                                     </tr>
                                     </thead>
@@ -156,14 +131,13 @@
                                     <!--for-list-->
                                     <tr>
                                         <td class="center">{$rs.i}</td>
-                                        <td>{$rs.area_id}</td>
-                                        <td>{$rs.title}</td>
+                                        <td>{$rs.year}</td>
                                         <td>{$rs.nm}</td>
-                                        <td><img src="{$D}/uploads/act/{$rs.pic}" alt="" width="130"></td>
+                                        <td width="600"><div style="width: 100%; height: 200px; overflow: hidden">{$rs.m_info}</div></td>
                                         <td>
 
                                             <div class="btn-group tooltip-info" data-rel="tooltip" title="修改">
-                                                <a href="{$D}/{$C}/{$M}/act_edit?id={$rs.id}{$para}" class="btn btn-xs btn-primary tooltip-info">
+                                                <a href="{$D}/{$C}/{$M}/work_edit?id={$rs.id}{$para}" class="btn btn-xs btn-primary tooltip-info">
                                                     <i class="icon-edit bigger-120"></i>
                                                 </a>
                                             </div>
@@ -173,7 +147,7 @@
                                                     <i class="icon-trash bigger-120"></i>
                                                 </a>
                                                 <ul class="dropdown-menu dropdown-danger">
-                                                    <li><a href="{$D}/{$C}/{$M}/act_del_op?id={$rs.id}{$para}">删除 {$rs.nm}</a></li>
+                                                    <li><a href="{$D}/{$C}/{$M}/work_del_op?id={$rs.id}{$para}">删除 {$rs.nm}</a></li>
                                                 </ul>
                                             </div><!-- /btn-group -->
                                         </td>

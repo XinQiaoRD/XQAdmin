@@ -133,16 +133,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" > 年份</label>
-
-                            <div class="col-sm-9">
-                                <select name="year">
-                                    {$year_select}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" > 排序</label>
 
                             <div class="col-sm-9">
@@ -159,24 +149,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" > 简介 </label>
-
-                            <div class="col-sm-9">
-                                <textarea name="desc_info" id="" cols="30" rows="5" class="col-xs-10"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" > 社会活动 </label>
-
-                            <div class="col-sm-9">
-                                <textarea name="m_info" id="m_info" rows="10" cols="80"></textarea>
+                            <label class="col-sm-3 control-label no-padding-right" > 照片 </label>
+                            <div class="col-sm-9" id="pic">
                                 <script>
-                                    CKEDITOR.replace( 'm_info' );
+                                    $(function(){
+                                        new PekeUP({
+                                            type:"img",
+                                            id:"pic",
+                                            name:"照片",
+                                            url:"{$D}/{$C}/{$M}/ImgUpload",
+                                            delUrl:"{$D}/{$C}/{$M}/DelCache"
+                                        });
+                                    });
                                 </script>
                             </div>
                         </div>
-
-
                         <div class="space-4"></div>
 
                         <div class="clearfix form-actions">

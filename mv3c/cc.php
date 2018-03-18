@@ -297,7 +297,7 @@ class cc{
 	public function sqlok($tb){
 		$this->field  = $this->field ? ' '.$this->field : ' *';
 		$this->where  = $this->where ? ' WHERE '.$this->where : '';
-		$this->order  = $this->order ? ' ORDER BY '.str_replace('@',' DESC',$this->order) : '';
+		$this->order  = $this->order ? ' ORDER BY '.str_replace('@',' DESC ',$this->order) : '';
 		$this->group  = $this->group ? ' GROUP BY '.$this->group : '';
 		$this->having = $this->having? ' HAVING '.$this->having : '';
 		$this->limit  = $this->limit ? ' LIMIT '.$this->limit : '';

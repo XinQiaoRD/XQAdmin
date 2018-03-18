@@ -91,46 +91,89 @@
 
                     <ul class="nav nav-tabs" id="myTab">
                         <li><a href="{$D}/{$C}/{$M}/m"><i class="green fa fa-list bigger-110"></i> {$menu_m}</a></li>
-                        <li><a href="{$D}/{$C}/{$M}/act_add"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_act_add}</a></li>
-                        <li class="active"><a href="#"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_act_edit}</a></li>
+                        <li><a href="{$D}/{$C}/{$M}/project_add"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_project_add}</a></li>
+                        <li class="active"><a href="#"><i class="green fa fa-floppy-o bigger-110"></i> {$menu_project_edit}</a></li>
                     </ul>
 
                     <div class="hr hr-dotted"></div>
 
-                    <form method="post" class="form-horizontal" role="form" action="{$D}/{$C}/{$M}/act_edit_op?id={$id}{$para}">
-
+                    <form method="post" class="form-horizontal" role="form" action="{$D}/{$C}/{$M}/project_edit_op?id={$id}{$para}">
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" > 所在选区 </label>
+                            <label class="col-sm-3 control-label no-padding-right" > 年份</label>
 
                             <div class="col-sm-9">
-                                <select name="area_id" id="AID" onchange="getPerson()">
-                                    <option value="1" <!--if-area_id-({$area_id}=='1')-->selected<!--/if-area_id-->>第一选区</option>
-                                    <option value="2" <!--if-area_id-({$area_id}=='2')-->selected<!--/if-area_id-->>第二选区</option>
-                                    <option value="3" <!--if-area_id-({$area_id}=='3')-->selected<!--/if-area_id-->>第三选区</option>
-                                    <option value="4" <!--if-area_id-({$area_id}=='4')-->selected<!--/if-area_id-->>第四选区</option>
-                                    <option value="5" <!--if-area_id-({$area_id}=='5')-->selected<!--/if-area_id-->>第五选区</option>
-                                    <option value="6" <!--if-area_id-({$area_id}=='6')-->selected<!--/if-area_id-->>第六选区</option>
-                                    <option value="7" <!--if-area_id-({$area_id}=='7')-->selected<!--/if-area_id-->>第七选区</option>
-                                    <option value="8" <!--if-area_id-({$area_id}=='8')-->selected<!--/if-area_id-->>第八选区</option>
+                                <select name="year">
+                                    {$year_select}
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 标题</label>
+
+                            <div class="col-sm-9">
+                                <input name="title" value="{$title}" type="text" class="col-xs-10" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 经费</label>
+
+                            <div class="col-sm-9">
+                                <input name="money" value="{$money}" type="text" class="col-xs-10" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 示意图片 </label>
+                            <div class="col-sm-9" id="img">
                                 <script>
-                                    function getPerson(){
-                                        var aid = $("#AID").val();
-                                        $.get("{$D}/{$C}/{$M}/act_add_person_ajax?area_id="+aid, function(html){
-                                            $("#PID").html(html);
+                                    $(function(){
+                                        new PekeUP({
+                                            type:"img",
+                                            id:"img",
+                                            name:"示意图片",
+                                            edit:"{$img}",
+                                            editSize:"{$img_size}",
+                                            editUrl:"{$D}/uploads/project/",
+                                            url:"{$D}/{$C}/{$M}/ImgUpload",
+                                            delUrl:"{$D}/{$C}/{$M}/DelCache"
                                         });
-                                    }
-                                    //getPerson();
+                                    });
                                 </script>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" > 代表名称</label>
+                            <label class="col-sm-3 control-label no-padding-right" > 主要内容 </label>
 
                             <div class="col-sm-9">
-                                <select id="PID" name="pid" >{$pid_select}</select>
+                                <textarea name="m_info" cols="30" rows="5" class="col-xs-10">{$m_info}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 时间安排 </label>
+
+                            <div class="col-sm-9">
+                                <textarea name="times" cols="30" rows="5" class="col-xs-10">{$times}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 责任科室 </label>
+
+                            <div class="col-sm-9">
+                                <input name="work" value="{$work}" type="text" class="col-xs-10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > 分管领导 </label>
+
+                            <div class="col-sm-9">
+                                <input name="lead" value="{$lead}" type="text" class="col-xs-10">
                             </div>
                         </div>
 
@@ -141,36 +184,6 @@
                                 <input name="seat" value="{$seat}" type="text" class="col-xs-10" placeholder="格式：1-100">
                             </div>
                         </div>
-
-                        <hr />
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" > 标题 </label>
-
-                            <div class="col-sm-9">
-                                <input name="title" value="{$title}" type="text" class="col-xs-10">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" > 照片 </label>
-                            <div class="col-sm-9" id="pic">
-                                <script>
-                                    $(function(){
-                                        new PekeUP({
-                                            type:"img",
-                                            id:"pic",
-                                            name:"照片",
-                                            edit:"{$pic}",
-                                            editSize:"{$pic_size}",
-                                            editUrl:"{$D}/uploads/act/",
-                                            url:"{$D}/{$C}/{$M}/ImgUpload",
-                                            delUrl:"{$D}/{$C}/{$M}/DelCache"
-                                        });
-                                    });
-                                </script>
-                            </div>
-                        </div>
-
 
                         <div class="space-4"></div>
 

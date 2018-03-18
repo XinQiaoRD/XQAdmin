@@ -710,7 +710,6 @@ class ccv extends cc
 	
 		$tnm = $this->sqlok($tnm);
 		$sql = 'SELECT '.$this->field." FROM $tnm".$this->where.$this->group.$this->having.$this->order.$this->limit;
-
 		$query = $this->db->query($sql);
 		$this->sqlcls();
 
