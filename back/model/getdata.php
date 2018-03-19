@@ -136,6 +136,104 @@ class mv3c_getdata{
         $json_all.= $json;
 
 
+
+        //述职
+        $json = '
+"page4":{';
+        //year
+        $arr_year = [];
+        $arr_year_id = [];
+        $arr_year_img_id = [];
+
+        $cc->order = "year@";
+        $cc->group = "year";
+        $cc->field = "year";
+        $rsc = $cc->opsql("work", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_year[] = $rs["year"];
+
+            $arr_year_id[] = $this->arr_year_id($rs["year"], $cc, "work");
+            $arr_year_img_id[] = $this->arr_year_id($rs["year"], $cc, "work_img");
+        }
+        $json_year = implode(",", $arr_year);
+        $json.= '
+            "year":['.$json_year.'],';
+        $json_year_id = implode(",", $arr_year_id);
+        $json.= '
+            "year_id":{'.$json_year_id.'},';
+
+        $json_year_img_id = implode(",", $arr_year_img_id);
+        $json.= '
+            "year_img_id":{'.$json_year_img_id.'},';
+
+        $arr_page = [];
+        $cc->order = "id";
+        $rsc = $cc->opsql("work", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_page[] = '
+            "'.$rs["id"].'":'.$this->rsToJson($rs);
+        }
+        $json_page = implode(",", $arr_page);
+        $json.= '
+            "work":{'.$json_page.'},';
+
+        $arr_page = [];
+        $cc->order = "id";
+        $rsc = $cc->opsql("work_img", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_page[] = '
+            "'.$rs["id"].'":'.$this->rsToJson($rs);
+        }
+        $json_page = implode(",", $arr_page);
+        $json.= '
+            "work_img":{'.$json_page.'}';
+
+        $json.= '},';
+        $json_all.= $json;
+
+
+        //民生
+        $json = '
+"page5":{';
+        //year
+        $arr_year = [];
+        $arr_year_id = [];
+
+        $cc->order = "year@";
+        $cc->group = "year";
+        $cc->field = "year";
+        $rsc = $cc->opsql("project", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_year[] = $rs["year"];
+
+            $arr_year_id[] = $this->arr_year_id($rs["year"], $cc, "project");
+        }
+        $json_year = implode(",", $arr_year);
+        $json.= '
+            "year":['.$json_year.'],';
+        $json_year_id = implode(",", $arr_year_id);
+        $json.= '
+            "year_id":{'.$json_year_id.'},';
+
+
+        $arr_page = [];
+        $cc->order = "id";
+        $rsc = $cc->opsql("project", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_page[] = '
+            "'.$rs["id"].'":'.$this->rsToJson($rs);
+        }
+        $json_page = implode(",", $arr_page);
+        $json.= '
+            "project":{'.$json_page.'},';
+
+
+        $json.= '},';
+        $json_all.= $json;
+
+
+
+
         //end
         $json_all.= '
         "download_finish": 0}';

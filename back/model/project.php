@@ -92,7 +92,7 @@ class mv3c_project{
 
         $cc->sqli("money", $g->money);
         $cc->sqli("m_info", $g->m_info);
-        $cc->sqli("times", $g->times);
+        $cc->sqli("time_info", $g->time_info);
         $cc->sqli("work", $g->work);
         $cc->sqli("lead", $g->lead);
 
@@ -149,7 +149,7 @@ class mv3c_project{
 
         $cc->sqli("money", $g->money);
         $cc->sqli("m_info", $g->m_info);
-        $cc->sqli("times", $g->times);
+        $cc->sqli("time_info", $g->time_info);
         $cc->sqli("work", $g->work);
         $cc->sqli("lead", $g->lead);
 

@@ -149,7 +149,10 @@
                             <label class="col-sm-3 control-label no-padding-right" > 主要内容 </label>
 
                             <div class="col-sm-9">
-                                <textarea name="m_info" cols="30" rows="5" class="col-xs-10">{$m_info}</textarea>
+                                <textarea name="m_info" id="m_info" rows="10" cols="80">{$m_info}</textarea>
+                                <script>
+                                    CKEDITOR.replace( 'm_info' );
+                                </script>
                             </div>
                         </div>
 
@@ -157,7 +160,10 @@
                             <label class="col-sm-3 control-label no-padding-right" > 时间安排 </label>
 
                             <div class="col-sm-9">
-                                <textarea name="times" cols="30" rows="5" class="col-xs-10">{$times}</textarea>
+                                <textarea name="time_info" id="time_info" rows="10" cols="80">{$time_info}</textarea>
+                                <script>
+                                    CKEDITOR.replace( 'time_info' );
+                                </script>
                             </div>
                         </div>
 

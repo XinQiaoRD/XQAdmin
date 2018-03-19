@@ -132,7 +132,7 @@ class mv3c_work{
 
         $cc->sqli("year", $g->year);
 
-        $cc->sqli("title", $g->title);
+        $cc->sqli("nm", $g->nm);
         $cc->sqli("m_info", $g->m_info);
 
         $cc->sqli("seat", $g->seat);
