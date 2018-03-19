@@ -99,7 +99,6 @@ class mv3c_word{
     public function word_add_person_ajax(){
 
         $cc = new ccv;
-
         $g = $cc->get();
 
         $cc->where = "area_id=".$g->area_id;
@@ -110,6 +109,7 @@ class mv3c_word{
 
     public function word_add_op(){
         $cc = new cc;
+        $up = new pekeUpload;
         $c = $this->conf($cc);
 
         $g = $cc->get();
@@ -130,9 +130,20 @@ class mv3c_word{
         $cc->sqli("news_tit", $g->news_tit);
         $cc->sqli("news_info", $g->news_info);
 
+        $cc->sqli("news_img1", $g->news_img1);
+        $cc->sqli("news_img1_size", $g->news_img1_size);
+        $cc->sqli("news_img2", $g->news_img2);
+        $cc->sqli("news_img2_size", $g->news_img2_size);
+        $cc->sqli("news_img3", $g->news_img3);
+        $cc->sqli("news_img3_size", $g->news_img3_size);
+
         $cc->sqli("seat", $g->seat);
 
         $cc->opsql("word", 'add');
+
+        if($g->news_img1) $up->moveFile("/uploads/cache/".$g->news_img1 , "/uploads/word/".$g->news_img1);
+        if($g->news_img2) $up->moveFile("/uploads/cache/".$g->news_img2 , "/uploads/word/".$g->news_img2);
+        if($g->news_img3) $up->moveFile("/uploads/cache/".$g->news_img3 , "/uploads/word/".$g->news_img3);
 
         $cc->go('/'.C.'.php/'.M."/m");
     }
@@ -163,12 +174,20 @@ class mv3c_word{
 
     public function word_edit_op(){
         $cc = new cc;
+        $up = new pekeUpload;
         $c = $this->conf($cc);
 
         $g = $cc->get();
         $id = $g->id;
         if(!$id) $cc->go( -1 , "ID错误");
         if(!$g->pid) $cc->go( -1 , "请选择代表");
+
+        $cc->where = "id=".$id;
+        $rs = $cc->opsql("word");
+
+        $up->sqliCache($g->news_img1, "news_img1", "word", $rs, $cc, "strs");
+        $up->sqliCache($g->news_img2, "news_img2", "word", $rs, $cc, "strs");
+        $up->sqliCache($g->news_img3, "news_img3", "word", $rs, $cc, "strs");
 
 
         $cc->where = "id=".$id;
@@ -187,20 +206,36 @@ class mv3c_word{
         $cc->sqli("news_tit", $g->news_tit);
         $cc->sqli("news_info", $g->news_info);
 
+        $cc->sqli("news_img1", $g->news_img1);
+        $cc->sqli("news_img1_size", $g->news_img1_size);
+        $cc->sqli("news_img2", $g->news_img2);
+        $cc->sqli("news_img2_size", $g->news_img2_size);
+        $cc->sqli("news_img3", $g->news_img3);
+        $cc->sqli("news_img3_size", $g->news_img3_size);
+
         $cc->sqli("seat", $g->seat);
 
         $cc->opsql("word", 'edit');
+
+
 
         $cc->go('/'.C.'.php/'.M."/m?".$c->para);
     }
 
     public function word_del_op(){
         $cc = new cc;
+        $up = new pekeUpload;
         $c = $this->conf($cc);
 
         $g = $cc->get();
         $id = $g->id;
         if(!$id) $cc->go( -1 , "ID错误");
+
+        $cc->where = "id='{$id}'";
+        $rs = $cc->opsql("word");
+        $up->delFile("/uploads/word/", $rs["news_img1"]);
+        $up->delFile("/uploads/word/", $rs["news_img2"]);
+        $up->delFile("/uploads/word/", $rs["news_img3"]);
 
         $cc->where = "id='{$id}'";
         $cc->opsql("word", 'del');
@@ -209,7 +244,33 @@ class mv3c_word{
     }
 
     ///////////
+    public function ImgUpload(){
 
+        $cc = new cc;
+        $g = $cc->get();
+
+        $up = new pekeUpload;
+        echo $up->upImg($g->filename , '/uploads/cache/');
+
+    }
+
+    public function Mp3Upload(){
+
+        $cc = new cc;
+        $g = $cc->get();
+
+        $up = new pekeUpload;
+        echo $up->upMp3($g->filename , '/uploads/cache/');
+
+    }
+
+    public function DelCache(){
+        $cc = new cc;
+        $g = $cc->get();
+
+        $up = new pekeUpload;
+        $up->delFile('/uploads/cache/', $g->file);
+    }
     private function view_inc(&$cc, $c){
         $cc->Val['Admin_nm'] = $_SESSION['admin_nm'];
         $cc->Val['Admin_pic'] = 'user'.$_SESSION['admin_tp'];

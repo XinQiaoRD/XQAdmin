@@ -327,15 +327,15 @@ class mv3c_getdata{
             "act":{'.$json_act.'},';
 
         //meet会议资料
-        $arr_meet = [];
-        $cc->order = "id";
-        $rsc = $cc->opsql("meet", "rsc");
-        while($rs = $cc->rs($rsc)){
-            $arr_meet[] = $this->arr_word($cc, $rs);
-        }
-        $json_meet = implode(",", $arr_meet);
-        $json.= '
-            "meet":{'.$json_meet.'},';
+//        $arr_meet = [];
+//        $cc->order = "id";
+//        $rsc = $cc->opsql("meet", "rsc");
+//        while($rs = $cc->rs($rsc)){
+//            $arr_meet[] = $this->arr_word($cc, $rs);
+//        }
+//        $json_meet = implode(",", $arr_meet);
+//        $json.= '
+//            "meet":{'.$json_meet.'},';
 
 
         //end
@@ -454,24 +454,24 @@ class mv3c_getdata{
         $rsc = $cc->opsql("act", "rsc");
         $arr = [];
         while($rsi = $cc->rs($rsc)){
-            $arr[] = $rs["id"];
+            $arr[] = $rsi["id"];
         }
         $arr_t = implode(",", $arr);
         $json.= $arr_t;
 
 
-        $json.= '],
-        "meet":[';
-        $cc->where = "pid=".$rs["id"];
-        $cc->order = "seat";
-        $cc->field = "id";
-        $rsc = $cc->opsql("meet", "rsc");
-        $arr = [];
-        while($rsi = $cc->rs($rsc)){
-            $arr[] = $rs["id"];
-        }
-        $arr_t = implode(",", $arr);
-        $json.= $arr_t;
+//        $json.= '],
+//        "meet":[';
+//        $cc->where = "pid=".$rs["id"];
+//        $cc->order = "seat";
+//        $cc->field = "id";
+//        $rsc = $cc->opsql("meet", "rsc");
+//        $arr = [];
+//        while($rsi = $cc->rs($rsc)){
+//            $arr[] = $rs["id"];
+//        }
+//        $arr_t = implode(",", $arr);
+//        $json.= $arr_t;
 
         $json.= ']}';
         return $json;
