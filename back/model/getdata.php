@@ -232,6 +232,81 @@ class mv3c_getdata{
         $json_all.= $json;
 
 
+        //领导关怀
+        $json = '
+"page6":{';
+        //year
+        $arr_year = [];
+        $arr_year_id = [];
+
+        $cc->order = "year@";
+        $cc->group = "year";
+        $cc->field = "year";
+        $rsc = $cc->opsql("lead", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_year[] = $rs["year"];
+
+            $arr_year_id[] = $this->arr_year_id($rs["year"], $cc, "lead");
+        }
+        $json_year = implode(",", $arr_year);
+        $json.= '
+            "year":['.$json_year.'],';
+        $json_year_id = implode(",", $arr_year_id);
+        $json.= '
+            "year_id":{'.$json_year_id.'},';
+
+        $arr_page = [];
+        $cc->order = "id";
+        $rsc = $cc->opsql("lead", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_page[] = '
+            "'.$rs["id"].'":'.$this->rsToJsonImg($rs, $cc, "lead");
+        }
+        $json_page = implode(",", $arr_page);
+        $json.= '
+            "lead":{'.$json_page.'}';
+
+        $json.= '},';
+        $json_all.= $json;
+
+
+        //代表督查
+        $json = '
+"page7":{';
+        //year
+        $arr_year = [];
+        $arr_year_id = [];
+
+        $cc->order = "year@";
+        $cc->group = "year";
+        $cc->field = "year";
+        $rsc = $cc->opsql("inspect", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_year[] = $rs["year"];
+
+            $arr_year_id[] = $this->arr_year_id($rs["year"], $cc, "inspect");
+        }
+        $json_year = implode(",", $arr_year);
+        $json.= '
+            "year":['.$json_year.'],';
+        $json_year_id = implode(",", $arr_year_id);
+        $json.= '
+            "year_id":{'.$json_year_id.'},';
+
+        $arr_page = [];
+        $cc->order = "id";
+        $rsc = $cc->opsql("inspect", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_page[] = '
+            "'.$rs["id"].'":'.$this->rsToJsonImg($rs, $cc, "inspect");
+        }
+        $json_page = implode(",", $arr_page);
+        $json.= '
+            "inspect":{'.$json_page.'}';
+
+
+        $json.= '},';
+        $json_all.= $json;
 
 
         //end
@@ -486,6 +561,41 @@ class mv3c_getdata{
             $row_arr[] = '
                 "'.$key.'":"'.addslashes($value).'"';
         }
+        $row_arr_w = implode(",", $row_arr);
+
+        $row.= $row_arr_w;
+        $row.= '}';
+
+        return $row;
+    }
+
+    private function rsToJsonImg(&$rs, &$cc, $db){
+
+
+        $row = '{';
+        $row_arr = [];
+        foreach($rs as $key => $value){
+            $row_arr[] = '
+                "'.$key.'":"'.addslashes($value).'"';
+        }
+
+        $arr_img = [];
+        $arr_img_size = [];
+
+        $cc->order = "seat";
+        $cc->field = "img, img_size";
+        $cc->where = "pid='".$rs["id"]."'";
+        $rsc = $cc->opsql($db."_img", "rsc");
+        while($rs = $cc->rs($rsc)){
+            $arr_img[] = '"'.$rs["img"].'"';
+            $arr_img_size[] = '"'.$rs["img_size"].'"';
+        }
+        $img_arr_w = implode(",", $arr_img);
+        $row_arr[] = '"imgs":['.$img_arr_w.']';
+
+        $img_size_arr_w = implode(",", $arr_img_size);
+        $row_arr[] = '"imgs_size":['.$img_size_arr_w.']';
+
         $row_arr_w = implode(",", $row_arr);
 
         $row.= $row_arr_w;
